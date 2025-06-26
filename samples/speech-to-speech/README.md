@@ -84,14 +84,20 @@ The solution supports two backend implementations with identical functionality:
 The CDK deployment supports backend language selection:
 
 - **Java (default)**: `cdk deploy`
-- **Python**: `cdk deploy --context custom:backendLanguage=python`
+- **Python**: `./deploy-with-buildx.sh --context custom:backendLanguage=python`
 
 The `cdk.json` file contains the context parameter `custom:backendLanguage` (set to "python" for Python deployment).
 
 ## Prerequisites
 
 - [Python](https://www.python.org/downloads/) 3.12 or higher
-- [Docker Desktop](https://docs.docker.com/desktop/install/)
+- [Docker Desktop](https://docs.docker.com/desktop/install/) (if your build environment is x86, make sure your docker environment is configured to be able to build Arm64 container images)
+```
+docker buildx create --name mybuilder 
+docker buildx use mybuilder
+docker buildx inspect --bootstrap
+
+```
 - [Gradle](https://gradle.org/install/) 7.x or higher
 - [Git](https://git-scm.com/downloads)
 - [AWS CDK Toolkit](https://docs.aws.amazon.com/cdk/v2/guide/cli.html)
@@ -183,13 +189,13 @@ The build output in `frontend/dist/` directory will be automatically deployed by
 8. Run AWS CDK Toolkit to deploy the Backend stack with the runtime resources.
 
    ```shell
-   $ cdk deploy --require-approval=never
+   $ ./deploy-with-buildx.sh --require-approval=never
    ```
 
    Any modifications made to the code can be applied to the deployed stack by running the same command again.
 
    ```shell
-   cdk deploy --require-approval=never
+   ./deploy-with-buildx.sh --require-approval=never
    ```
 
 The command above will deploy one stack in your account. With the default configuration of this sample, the observed deployment time was ~646 seconds (10.5 minutes).
