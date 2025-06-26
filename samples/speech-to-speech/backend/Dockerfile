@@ -29,6 +29,8 @@ ENV AWS_ACCESS_KEY_ID=""
 ENV AWS_SECRET_ACCESS_KEY=""
 ENV AWS_SESSION_TOKEN=""
 ENV DEPLOYMENT_TYPE="remote"
+# AWS credentials should be passed at runtime, not built into the image
+# Example: docker run -e AWS_ACCESS_KEY_ID=xxx -e AWS_SECRET_ACCESS_KEY=yyy -e AWS_SESSION_TOKEN=zzz ...
 
 # Change ownership of the application files to the non-root user
 RUN chown -R appuser:appuser /app

@@ -22,7 +22,10 @@ class BackendLanguage(str, Enum):
 def get_backend_language(app: cdk.App) -> BackendLanguage:
     """Get the backend language from the CDK context."""
     # Get backend language from context
-    backend_language = app.node.try_get_context("custom:backendLanguage").lower()
+    backend_language_context = app.node.try_get_context("custom:backendLanguage")
+    
+    # Handle None case and convert to lowercase if not None
+    backend_language = backend_language_context.lower() if backend_language_context else None
 
     # Return JAVA as default
     if not backend_language or backend_language == BackendLanguage.JAVA: 
