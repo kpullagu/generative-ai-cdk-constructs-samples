@@ -165,7 +165,7 @@ The build output in `frontend/dist/` directory will be automatically deployed by
    step to activate your virtualenv.
 
    ```shell
-   $ source .venv/bin/activate
+   $ source .venv/Scripts/activate
    ```
 
    If you are a Windows platform, you would activate the virtualenv like this:
